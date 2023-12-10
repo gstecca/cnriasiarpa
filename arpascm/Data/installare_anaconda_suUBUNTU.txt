@@ -1,0 +1,14 @@
+Installare conda su macchina ubuntu
+
+da terminale collegarsi alla macchina con ssh nome_utente@indirizzomacchina
+inserire la password
+
+scaricare il file di installazione di ubuntu con wget link_installer.sh
+ad esempio wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
+
+verificare che si abbiano i permessi di esecuzione del file con il comando ls -l nome_file.sh
+se non si hanno (-wr-wr-w ecc), aggiungerli digitano chmod u+x somefile
+si avrà qualcosa del tipo -wrxwr-
+
+eseguire il file con ./nome_file.sh
+fatto
