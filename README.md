@@ -1,7 +1,7 @@
 # cnriasiarpa
 copyright Istituto di Analisi dei Sistemi ed Informatica "Antonio Ruberti" del Consiglio Nazionale delle Ricerche, via dei Taurini 19, 00185.
 Authors: Marco Boresta and Diego Maria Pinto and Giuseppe Stecca
-For any inquirey please contact direzione@iasi.cnr.it, giuseppe.stecca@iasi.cnr.it
+For any inquirey please contact direzione@iasi.cnr.it, giuseppe.stecca@iasi.cnr.it, diegomaria.pinto@iasi.cnr.it, marco.boresta@iasi.cnr.it
 
 - prerequisites: \
 create a conda environment with all requirements and name it arpa
