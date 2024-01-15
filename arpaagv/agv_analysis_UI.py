@@ -769,6 +769,13 @@ elif st.session_state['active_tab'] == 'Statistical analysis':
 
 
         st.write("Sample Test Data")
+        mission_print_data['Timestamp'] = pd.to_datetime(mission_print_data['Timestamp'], format='%m-%d %H:%M:%S')
+
+# Now, add the year 2022 to the timestamp
+        mission_print_data['Timestamp'] = mission_print_data['Timestamp'].apply(lambda dt: dt.replace(year=2022))
+        mission_print_data['Timestamp'] = mission_print_data['Timestamp'].apply(lambda dt: dt.replace(day=12))
+        mission_print_data['Timestamp'] = mission_print_data['Timestamp'].apply(lambda dt: dt.replace(month=4))
+
 
         st.write(mission_print_data.head())
 
