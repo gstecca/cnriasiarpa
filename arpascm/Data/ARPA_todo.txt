@@ -1,0 +1,17 @@
+Variabile/Campo Tempo di Sosta da sottrarre al tempo di effettiva percorrenza
+Apprezzare su una mappa con colori diversi per mezzo, sulla stessa tratta, la località delle fermate
+Media e Dev. St. dei tempi di percorrenza di tutte le tratte (total_dur, di Alert
+
+Target time rispetto al quale apprezzo un ritardo è la media della total_duration
+Questo target (robusto) sarà media + 1.5*dev, il ritardo (new_col) è la differenza tra total_dur e il target time
+Considerare non solo Samsung -> Gerbole per la media, ma anche Mirafiori -> Samsung (a vuoto)
+
+Spiegare poi (con una regressione con val. statistica dei regressori) 
+la var. ritardo con le variabili CA_hours e CW_hours (eventualmente multivariata con explainability)
+
+Ciao Giuseppe,
+mi piacebbe poterci sentire per qualche consiglio di carattere professionale, vista la tua ampia esperienza sia al CNR che come consulente
+
+Ho partecipato infatti ad un concorso per un posto da ricercatore a tempo determinato allo IASI, e sto valutando come comportarmi nel caso 
+
+Hi, I am out of office and will be back on Monday 28
