@@ -228,8 +228,10 @@ def main():
 
             else:
                 df = df_scenario_3
-                df_input = pd.read_excel(os.getcwd() + '/Data/' + 'File_HMI_Scenari_Limite_e_Critico_rev1.xlsx', sheet_name='Scenario_Critico')
-                soglia_perc_convogli_in_ritatdo = df_input['Convogli in ritardo limite %'].iloc[0]
+                df_input_critico_0 = pd.read_excel(os.getcwd() + '/Data/' + 'File_HMI_Scenari_Limite_e_Critico_rev1.xlsx', sheet_name='Scenario_Limite')
+                soglia_perc_convogli_in_ritatdo = df_input_critico_0['Convogli in ritardo limite %'].iloc[0]
+                df_input_critico_1 = pd.read_excel(os.getcwd() + '/Data/' + 'File_HMI_Scenari_Limite_e_Critico_rev1.xlsx', sheet_name='Scenario_Critico')
+                soglia_perc_convogli_in_ritatdo_1 = df_input_critico_1['Convogli in ritardo limite %'].iloc[0]
                 df_input_critico_2 = pd.read_excel(os.getcwd() + '/Data/' + 'File_HMI_Scenari_Limite_e_Critico_rev1.xlsx', sheet_name='Scenario_Critico_1')
                 soglia_perc_convogli_in_ritatdo_2 = df_input_critico_2['Convogli in ritardo limite %'].iloc[0]
 
@@ -336,7 +338,7 @@ def main():
         with col3:
 
             st.title('ARPA - Inbound Weekly Logistics')
-            st.caption('Battery Supply Logistic Monotoring - KPIs - Scenarios and Track Visualization')
+            st.caption('Battery Supply Logistic Monitoring - KPIs - Scenarios and Track Visualization')
 
             scenario_start = df['start_daytime'].min()
             scenario_end = df['end_daytime'].max()
@@ -370,6 +372,9 @@ def main():
             perc_spedizioni_arrivate_in_ritardo = round(spedizioni_arrivate[spedizioni_arrivate['dalay_time'] > 0].shape[0] / len(df),2)*100
 
             col4.header('KPI di scenario')
+
+            if week_0_1_slider == 0:
+                perc_spedizioni_partite = 0
 
             KP1_s = st.metric(label="% Spedizioni partite", value = round(perc_spedizioni_partite,2))
             KP2_s = st.metric(label="% Spedizioni in corso", value = round(perc_spedizioni_in_corso,2))
@@ -406,8 +411,15 @@ def main():
                     st.button('Resetta i risultati', on_click=reset_simulation)  # Callback changes it to input mode
 
     if simulazione_attivata == True:
-        if st.session_state.scenario == 'Critico' and perc_spedizioni_arrivate_in_ritardo > soglia_perc_convogli_in_ritatdo_2:
-            df_input = df_input_critico_2
+
+        if st.session_state.scenario == 'Critico':
+            if perc_spedizioni_arrivate_in_ritardo > soglia_perc_convogli_in_ritatdo:
+                df_input = df_input_critico_0
+            if perc_spedizioni_arrivate_in_ritardo > soglia_perc_convogli_in_ritatdo_1:
+                df_input = df_input_critico_1
+            if perc_spedizioni_arrivate_in_ritardo > soglia_perc_convogli_in_ritatdo_2:
+                df_input = df_input_critico_2
+
 
         ########## print e plots risultati simulazione #####################
         warning_text = df_input['Messaggi HMI - Warning'].iloc[0]
@@ -425,16 +437,16 @@ def main():
                 st.write('Produzione Settimanale')
                 chart_data = pd.DataFrame([['Perdita Produtt. %', perdita_produttiva, "#969391"],
                                            ['Prod.Sett. Simulata %',  prod_sett_simulata,  "#df6b04"],
-                                           ['Prod.Sett. Schedulata %',prod_sett_schedulata, "#2600fc"]], columns = ['Week','Produzione','colore'])
+                                           ['Prod.Sett. Schedulata %',prod_sett_schedulata, "#2600fc"]], columns = ['Week','Produzione %','colore'])
 
-                st.bar_chart(chart_data, x='Week', y='Produzione', color='colore', use_container_width=True)
+                st.bar_chart(chart_data, x='Week', y='Produzione %', color='colore', use_container_width=True)
             with col2:
-                st.write('Scorta Magazzino')
+                st.write('Scorta Magazzino Ottimizzato')
 
                 chart_data = pd.DataFrame([['Liv.Scorta Limite %', scorta_limite, "#2600fc"],
                                            ['Liv.Scorta Simulato %',  scorta_simulato,  "#df6b04"]],
-                                          columns = ['Week','Produzione','colore'])
-                st.bar_chart(chart_data, x='Week', y='Produzione', color='colore', use_container_width=True)
+                                          columns = ['Week','Giacenza %','colore'])
+                st.bar_chart(chart_data, x='Week', y='Giacenza %', color='colore', use_container_width=True)
 
             with col3:
                 st.markdown(f'<h1 style="color:#ff3333;font-size:18px;">{warning_text}</h1>', unsafe_allow_html=True)
