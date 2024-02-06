@@ -290,17 +290,17 @@ def main():
                 stop_dur = tot_stop_dur
 
             if traj_0_1_slider != 1:
-                try:
-                    driving_dur = driving_dur_list[traj_0_1_index]
-                except IndexError:
-                    driving_dur = driving_dur_list[traj_0_1_index - 1]
+                driving_dur = driving_dur_list[int(traj_0_1_slider * len(driving_dur_list))]
             else:
                 driving_dur = driving_dur_list[-1]
 
-            if traj_0_1_slider != 1:
-                total_dur = round(dur_list[traj_0_1_index] + stop_dur,2)
-            else:
-                total_dur = driving_dur + stop_dur
+            total_dur = driving_dur + stop_dur
+
+            # if traj_0_1_slider != 1:
+            #     total_dur = round(dur_list[int(traj_0_1_slider * len(dur_list))] + stop_dur, 2)
+            #     # total_dur = round(dur_list[traj_0_1_index] + stop_dur,2)
+            # else:
+            #     total_dur = driving_dur + stop_dur
 
             delay_time = 0
             if traj_0_1_slider == 1:
@@ -478,7 +478,7 @@ if __name__ == '__main__':
     timebar_list = pd.date_range(start=scenario_start, end=scenario_end, freq='2H', inclusive="both").to_list()
     timebar_list += [scenario_end]
 
-    truck_id = 18
+    truck_id = 26
     serial_path = 0
     origin = 'Samsung'
     destination = 'Gerbole'
@@ -497,7 +497,7 @@ if __name__ == '__main__':
 
     num_stops = 0
     stop_dur = 0
-    traj_0_1_slider = 0.6
+    traj_0_1_slider = 0.5
 
     traj_datetime_list = get_traj_datetimelist(truck_id, serial_path, origin, destination)
     if traj_0_1_slider == 1:
@@ -515,17 +515,16 @@ if __name__ == '__main__':
     total_dur = round(dur_list[traj_0_1_index] + stop_dur, 2)
 
     if traj_0_1_slider != 1:
-        try:
-            driving_dur = driving_dur_list[traj_0_1_index]
-        except IndexError:
-            gotdata = driving_dur = driving_dur_list[traj_0_1_index-1]
+        driving_dur = driving_dur_list[int(traj_0_1_slider * len(driving_dur_list))]
     else:
         driving_dur = driving_dur_list[-1]
 
+    total_dur = driving_dur + stop_dur
 
     delay_time = 0
     if traj_0_1_slider == 1:
         delay_time = tot_delay_time
+
 
     timestamped_geojson_name = 'truck_id_' + str(truck_id) + '_serial_' + str(serial_path) + '_from_' + origin + '_to_' + destination + '.geojson'
     file_path = os.getcwd() + '/Data/Geojson_paths/'
